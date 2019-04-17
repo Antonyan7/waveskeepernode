@@ -1,27 +1,29 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
 const WavesAPI = require('@waves/waves-api');
+const sha256 = require('crypto-js/sha256');
+const User = require('../models/user');
+const mail = require('../../mail');
 
 
 exports.createUser = (req, res) => {
-  console.log(req);
-  console.log(req.body);
-  bcrypt.hash('testing123', 10, (err, hash) => {
-    if (err) {
+  bcrypt.hash('testing123', 10, (error, hash) => {
+    if (error) {
       return res.status(500).json({
-        error: err,
+        error,
       });
     }
     const user = new User({
       email: req.body.email,
       password: hash,
       isVerified: 'false',
-      verificationToken: '',
+      verificationToken: sha256(req.body.email),
     });
-    user.save((err) => {
+    user.save((err, result) => {
+      console.log(result);
       if (err) {
         console.log(err);
       } else {
+        mail.main(result.verificationToken).catch(console.error);
         res.status(201).json({
           message: 'User Created',
         });
@@ -30,13 +32,53 @@ exports.createUser = (req, res) => {
   });
 };
 
+// const createUser = (data, res) => {
+//   bcrypt.hash('testing123', 10, (error, hash) => {
+//     if (error) {
+//       return res.status(500).json({
+//         error,
+//       });
+//     }
+//     const user = new User({
+//       email: data.email,
+//       password: hash,
+//       isVerified: 'false',
+//       verificationToken: sha256(data.email),
+//     });
+//     user.save((err) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.status(201).json({
+//           message: 'User Created',
+//         });
+//       }
+//     });
+//   });
+// };
+
+exports.verifyEmail = (req, res, next) => {
+  res.send(req.params.token);
+  console.log(req.params);
+  User.findOne({ verificationToken: req.params.token }, (err, user) => {
+    if (err) {
+      next(err);
+    } else {
+      req.user = user;
+      res.status(201).json({
+        message: 'User Created',
+      });
+      next();
+    }
+  });
+};
+
 exports.getAllUsers = (req, res, next) => {
   User.find((err, users) => {
     if (err) {
       return next(err);
-    } else {
-      return res.json(users);
     }
+    return res.json(users);
   });
 };
 

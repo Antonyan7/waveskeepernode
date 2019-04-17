@@ -20,6 +20,7 @@
     "@waves/waves-api": "^1.5.1",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "crypto-js": "^3.1.9-1",
     "debug": "^4.1.1",
     "dotenv": "^7.0.0",
     "eslint-config-airbnb": "^17.1.0",

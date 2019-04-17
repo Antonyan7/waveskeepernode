@@ -5,7 +5,6 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const mail = require('./mail');
 const usersRouter = require('./src/routes/users');
 
 mongoose.connect(`mongodb+srv://admin:${process.env.MONGO_ATLAS_PASS
@@ -23,9 +22,5 @@ app.use(usersRouter);
 // app.get('/create-smart-contract', async (req, res) => {
 //
 // });
-
-app.get('/send', (req, res) => {
-  mail.main().catch(console.error);
-});
 
 module.exports = app;
