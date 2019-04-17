@@ -26,7 +26,7 @@
                             document.getElementById("demo").innerHTML = this.responseText;
                         }
                     };
-                    xhttp.open("GET", "create-smart-contract", true);
+                    xhttp.open("POST", "user/auth", true);
                     xhttp.send({
                         publicKey: auth
                     });

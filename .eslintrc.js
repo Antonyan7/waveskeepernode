@@ -1,6 +1,6 @@
 module.exports = {
   'root': true,
-  'extends': 'standard',
+  'extends': 'airbnb',
   'env': {
     'es6': true,
     'node': true,
