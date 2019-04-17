@@ -1,6 +1,7 @@
 const express = require('express');
 const WavesAPI = require('@waves/waves-api');
 var app = express();
+var mail = require('./mail');
 
 app.get('/create-smart-contract', async function(req, res){
     // console.log(req)
@@ -58,6 +59,10 @@ app.get('/create-smart-contract', async function(req, res){
 
 });
 
+
+app.get('/send', function(req, res){
+  mail.main().catch(console.error);
+});
 
 app.use(express.static('public'))
 
