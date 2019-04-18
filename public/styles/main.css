@@ -1,0 +1,40 @@
+body
+{
+    background-color: #0277BD;
+    font-family: sans-serif;
+}
+.modal
+{
+    width: 300px;
+    height: 100px;
+    background: rgba(26, 35, 126, 0.5);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal__submit
+{
+    background: #1E88E5;
+    color: white;
+    border: 0;
+    height: 25px;
+    width: 60px;
+}
+.modal__input
+{
+    width: 150px;
+    height: 25px;
+    border: none;
+    padding: 0;
+    padding-left: 4px;
+}
+.modal__success
+{
+    display: none;
+    font-size: 12px;
+    color: white;
+}

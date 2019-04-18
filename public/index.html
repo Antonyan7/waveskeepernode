@@ -1,42 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<button onclick="startApp()">Auth</button>
-<script>
-
-    //
-    // WavesKeeper.initialPromise
-    //     .then((keeperApi) => {
-    //         keeperApi.publicState().then( state => startApp(state));
-    //     });
-
-    function startApp(state) {
-        if(WavesKeeper) {
-            const authData = { data: "Auth on my site" };
-            WavesKeeper.auth(authData)
-                .then(auth => {
-                    console.log(auth); //displaying the result on the console
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("demo").innerHTML = this.responseText;
-                        }
-                    };
-                    xhttp.open("POST", "user/auth", true);
-                    xhttp.send({
-                        publicKey: auth
-                    });
-                    /*...processing data */
-                }).catch(error => {
-                console.error(error); // displaying the result on the console
-                /*...processing errors */
-            })
-        }
-    }
-</script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body>
+        <div class="modal">
+            <form action="#" id="authForm">
+                <p class="modal__success" id="successMessage">Email sent! please check your email.</p>
+                <input type="email" id="email" class="modal__input" placeholder="Enter your email address">
+                <input class="modal__submit" type="submit" value="Auth">
+            </form>
+        </div>
+        <script src="scripts/index.js"></script>
+    </body>
 </html>
