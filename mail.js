@@ -2,7 +2,7 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-async function main(token) {
+async function main({ token, email }) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -15,10 +15,10 @@ async function main(token) {
 
   const info = await transporter.sendMail({
     from: 'antonyansergey2002@gmail.com', // sender address
-    to: 'antonyansergey2002@gmail.com', // list of receivers
-    subject: 'Hello', // Subject line
+    to: email, // list of receivers
+    subject: 'Waves Verification', // Subject line
     text: token, // plain text body
-    html: `http://localhost:7000/user/verify/${token}`, // html body
+    html: `<a href="http://localhost:7000/user/verify/${token}">http://localhost:7000/user/verify/${token}</a>`, // html body
   });
 
   console.log('Message sent: %s', info.messageId);

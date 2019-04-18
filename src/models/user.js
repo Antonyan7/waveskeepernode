@@ -18,6 +18,9 @@ const UserSchema = mongoose.Schema({
   verificationToken: {
     type: String, required: false,
   },
+  publicKey: {
+    type: String, required: true,
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);

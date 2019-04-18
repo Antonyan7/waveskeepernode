@@ -28,7 +28,7 @@ successPath – relative path to the website's Auth API (optional field)
               }, 3000);
             }
           };
-          xhttp.open('POST', 'user/auth', true);
+          xhttp.open('POST', 'user/create-user', true);
           xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
           xhttp.send(`publicKey=${auth.publicKey}&email=${emailField.value}`);
           //   xhttp.send({
