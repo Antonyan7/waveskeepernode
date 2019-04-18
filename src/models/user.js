@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
   email: {
@@ -6,18 +6,18 @@ const UserSchema = mongoose.Schema({
     required: true,
     trim: true,
     unique: true,
-    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
   },
 
   password: {
-    type: String, required: true
+    type: String, required: true,
   },
   isVerified: {
-    type: Boolean, required: true, default: false
+    type: Boolean, required: true, default: false,
   },
   verificationToken: {
-    type: String, required: false
-  }
-})
+    type: String, required: false,
+  },
+});
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema);

@@ -1,31 +1,74 @@
 const bcrypt = require('bcrypt');
 const WavesAPI = require('@waves/waves-api');
+const sha256 = require('crypto-js/sha256');
 const User = require('../models/user');
-require('dotenv').config();
+const mail = require('../../mail');
 
 
 const createUser = (email, res) => {
-  bcrypt.hash('testing123', 10, (err, hash) => {
-    if (err) {
+  bcrypt.hash('testing123', 10, (error, hash) => {
+    if (error) {
       return res.status(500).json({
-        error: err,
+        error,
       });
     }
     const user = new User({
-      email: email,
+      email,
       password: hash,
       isVerified: 'false',
-      verificationToken: '',
+      verificationToken: sha256(email),
     });
     user.save((error) => {
       if (error) {
         console.log(error);
       } else {
+        mail.main(result.verificationToken).catch(console.error);
         res.status(201).json({
           message: 'User Created',
         });
       }
     });
+  });
+};
+
+// const createUser = (data, res) => {
+//   bcrypt.hash('testing123', 10, (error, hash) => {
+//     if (error) {
+//       return res.status(500).json({
+//         error,
+//       });
+//     }
+//     const user = new User({
+//       email: data.email,
+//       password: hash,
+//       isVerified: 'false',
+//       verificationToken: sha256(data.email),
+//     });
+//     user.save((err) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.status(201).json({
+//           message: 'User Created',
+//         });
+//       }
+//     });
+//   });
+// };
+
+exports.verifyEmail = (req, res, next) => {
+  res.send(req.params.token);
+  console.log(req.params);
+  User.findOne({ verificationToken: req.params.token }, (err, user) => {
+    if (err) {
+      next(err);
+    } else {
+      req.user = user;
+      res.status(201).json({
+        message: 'User Created',
+      });
+      next();
+    }
   });
 };
 
