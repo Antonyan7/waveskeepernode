@@ -19,8 +19,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(usersRouter);
 
-// app.get('/create-smart-contract', async (req, res) => {
-//
-// });
-
 module.exports = app;
